@@ -47,9 +47,9 @@ export default function App() {
                         {show === el.id
                             ? <Input id={el.id} setShow={setShow} title={el.title} changeTitle={changeTitle}/>
                             : <Text onPress={() => setShow(el.id)}>{el.title}</Text>}
-                        {/*<View style={[globalStyle.border,{backgroundColor:'#ff8906'}]}>*/}
-                        {/*    <Button color={'#fffffe'} title={'Remove'} onPress={()=>removeTask(el.id)}/>*/}
-                        {/*</View>*/}
+                        <View style={[globalStyle.border,{backgroundColor:'#ff8906'}]}>
+                            <Button color={'#fffffe'} title={'Remove'} onPress={()=>removeTask(el.id)}/>
+                        </View>
                     </View>
                 })}
             </View>
