@@ -6,7 +6,7 @@ import {TaskStatuses, TaskType} from '../../../api/todolists-api'
 import {FilterValuesType, TodolistDomainType} from '../todolists-reducer'
 import {MaterialIcons} from '@expo/vector-icons';
 import {fetchTasksTC} from '../tasks-reducer'
-import {Text, TouchableOpacity, View} from "react-native";
+import {TouchableOpacity, View} from "react-native";
 import {useAppDispatch} from "../../../app/store";
 
 type PropsType = {
@@ -23,7 +23,6 @@ type PropsType = {
 }
 
 export const Todolist = React.memo(function ({demo = false, ...props}: PropsType) {
-    console.log('Todolist called')
 
     const dispatch = useAppDispatch()
     useEffect(() => {
@@ -45,11 +44,6 @@ export const Todolist = React.memo(function ({demo = false, ...props}: PropsType
         props.changeTodolistTitle(props.todolist.id, title)
     }, [props.todolist.id, props.changeTodolistTitle])
 
-    const onAllClickHandler = useCallback(() => props.changeFilter('all', props.todolist.id), [props.todolist.id, props.changeFilter])
-    const onActiveClickHandler = useCallback(() => props.changeFilter('active', props.todolist.id), [props.todolist.id, props.changeFilter])
-    const onCompletedClickHandler = useCallback(() => props.changeFilter('completed', props.todolist.id), [props.todolist.id, props.changeFilter])
-
-
     let tasksForTodolist = props.tasks
 
     if (props.todolist.filter === 'active') {
@@ -59,15 +53,15 @@ export const Todolist = React.memo(function ({demo = false, ...props}: PropsType
         tasksForTodolist = props.tasks.filter(t => t.status === TaskStatuses.Completed)
     }
 
-    return <View style={{paddingTop: 50}}>
+    return <View style={{padding: 10, backgroundColor: '#abd1c6'}}>
         <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
             <EditableSpan value={props.todolist.title} onChange={changeTodolistTitle}/>
             <TouchableOpacity style={{marginLeft:25}} onPress={removeTodolist}>
-                <MaterialIcons name="delete" size={24} color="black"/>
+                <MaterialIcons name="delete" size={24} color="#fffffe"/>
             </TouchableOpacity>
         </View>
         <AddItemForm addItem={addTask} disabled={props.todolist.entityStatus === 'loading'}/>
-        <View style={{padding:8}}>
+        <View style={{padding:3}}>
             {
                 tasksForTodolist.map(t => <Task key={t.id} task={t} todolistId={props.todolist.id}
                                                 removeTask={props.removeTask}

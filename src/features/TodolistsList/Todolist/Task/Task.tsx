@@ -24,26 +24,18 @@ export const Task = React.memo((props: TaskPropsType) => {
     }, [props.task.id, props.todolistId]);
 
     return <View key={props.task.id}
-            style={props.task.status === TaskStatuses.Completed?{...styles.task, opacity:0.5}:{...styles.task}}
+            style={props.task.status === TaskStatuses.Completed?{...styles.task}:{...styles.task,opacity:0.5}}
     >
         <View style={{ flexDirection:'row'}} >
             <Checkbox
                 value={props.task.status === TaskStatuses.Completed}
-                //checked={}
-                //color="primary"
                 style={{marginRight:12}}
                 onValueChange={onChangeHandler}
             />
             <EditableSpan value={props.task.title} onChange={onTitleChangeHandler}/>
         </View>
-
-
-
-        {/*<IconButton onClick={onClickHandler}>*/}
-        {/*    <Delete/>*/}
-        {/*</IconButton>*/}
         <TouchableOpacity style={{marginLeft:25}} onPress={onClickHandler}>
-            <MaterialIcons name="delete" size={24} color="black"/>
+            <MaterialIcons name="delete" size={24} color="#fffffe"/>
         </TouchableOpacity>
     </View>
 })

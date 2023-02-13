@@ -1,5 +1,5 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
-import {Text, TextInput, TouchableOpacity, View,StyleSheet} from "react-native";
+import React, { useState} from 'react';
+import { TextInput, TouchableOpacity, View,StyleSheet} from "react-native";
 import {Ionicons} from '@expo/vector-icons';
 
 
@@ -26,15 +26,6 @@ export const AddItemForm = React.memo(function ({addItem, disabled = false}: Add
         setTitle(e)
     }
 
-    const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        if (error !== null) {
-            setError(null);
-        }
-        if (e.charCode === 13) {
-            addItemHandler();
-        }
-    }
-
     return <View style={{flexDirection: 'row'}}>
 
         <TextInput
@@ -44,27 +35,15 @@ export const AddItemForm = React.memo(function ({addItem, disabled = false}: Add
         />
         <View>
             <TouchableOpacity onPress={addItemHandler}>
-                <Ionicons name="add" size={24} color="black"/>
+                <Ionicons name="add" size={24} color="#fffffe"/>
             </TouchableOpacity>
         </View>
-
-        {/*<TextField variant="outlined"*/}
-        {/*           disabled={disabled}*/}
-        {/*           error={!!error}*/}
-        {/*           value={title}*/}
-        {/*           onChange={onChangeHandler}*/}
-        {/*           onKeyPress={onKeyPressHandler}*/}
-        {/*           label="Title"*/}
-        {/*           helperText={error}*/}
-        {/*/>*/}
-        {/*<IconButton color="primary" onClick={addItemHandler} disabled={disabled}>*/}
-        {/*    <AddBox />*/}
-        {/*</IconButton>*/}
     </View>
 })
 const styles = StyleSheet.create({
     input: {
         width:150,
-        backgroundColor:'#b14c4c'
+        backgroundColor:'#001e1d',
+        color:'#fffffe'
     },
 });

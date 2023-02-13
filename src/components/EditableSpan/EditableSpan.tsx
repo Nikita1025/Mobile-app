@@ -32,19 +32,17 @@ export const EditableSpan = React.memo(function (props: EditableSpanPropsType) {
                 value={title}
             />
             <View>
-                <Feather name="check" size={24} color="black" onPress={activateViewMode}/>
+                <Feather name="check" size={24} color="#fffffe" onPress={activateViewMode}/>
             </View>
         </View>
         : <Text
-            style={{fontSize:18, fontWeight:'500'}}
+            style={{fontSize:18, fontWeight:'500',color:'#001e1d'}}
             onLongPress={activateEditMode}>{props.value}</Text>
 });
-// <TextField value={title} onChange={changeTitle} autoFocus onBlur={activateViewMode} />
-
 
 const styles = StyleSheet.create({
     input: {
         width: 150,
-        backgroundColor: '#b14c4c'
+        backgroundColor: '#fffffe',
     },
 });
