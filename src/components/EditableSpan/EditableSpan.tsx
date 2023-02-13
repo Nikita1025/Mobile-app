@@ -1,5 +1,6 @@
-import React, {ChangeEvent, useState} from 'react';
-import {Text} from "react-native";
+import React, {useState} from 'react';
+import {StyleSheet, Text, TextInput, View} from "react-native";
+import {Feather} from '@expo/vector-icons';
 
 type EditableSpanPropsType = {
     value: string
@@ -19,12 +20,31 @@ export const EditableSpan = React.memo(function (props: EditableSpanPropsType) {
         setEditMode(false);
         props.onChange(title);
     }
-    const changeTitle = (e: ChangeEvent<HTMLInputElement>) => {
-        setTitle(e.currentTarget.value)
+    const changeTitle = (e: string) => {
+        setTitle(e)
     }
 
     return editMode
-        ?   <Text>input</Text>
-        : <Text>{props.value}</Text>
+        ? <View style={{flexDirection:'row'}}>
+            <TextInput
+                style={styles.input}
+                onChangeText={changeTitle}
+                value={title}
+            />
+            <View>
+                <Feather name="check" size={24} color="black" onPress={activateViewMode}/>
+            </View>
+        </View>
+        : <Text
+            style={{fontSize:18, fontWeight:'500'}}
+            onLongPress={activateEditMode}>{props.value}</Text>
 });
 // <TextField value={title} onChange={changeTitle} autoFocus onBlur={activateViewMode} />
+
+
+const styles = StyleSheet.create({
+    input: {
+        width: 150,
+        backgroundColor: '#b14c4c'
+    },
+});

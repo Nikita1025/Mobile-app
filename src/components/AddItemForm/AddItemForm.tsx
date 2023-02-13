@@ -43,7 +43,7 @@ export const AddItemForm = React.memo(function ({addItem, disabled = false}: Add
             value={title}
         />
         <View>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={addItemHandler}>
                 <Ionicons name="add" size={24} color="black"/>
             </TouchableOpacity>
         </View>

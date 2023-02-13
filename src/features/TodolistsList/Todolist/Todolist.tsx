@@ -4,9 +4,9 @@ import {EditableSpan} from '../../../components/EditableSpan/EditableSpan'
 import {Task} from './Task/Task'
 import {TaskStatuses, TaskType} from '../../../api/todolists-api'
 import {FilterValuesType, TodolistDomainType} from '../todolists-reducer'
-import {useDispatch} from 'react-redux'
+import {MaterialIcons} from '@expo/vector-icons';
 import {fetchTasksTC} from '../tasks-reducer'
-import {Text, View} from "react-native";
+import {Text, TouchableOpacity, View} from "react-native";
 import {useAppDispatch} from "../../../app/store";
 
 type PropsType = {
@@ -59,14 +59,15 @@ export const Todolist = React.memo(function ({demo = false, ...props}: PropsType
         tasksForTodolist = props.tasks.filter(t => t.status === TaskStatuses.Completed)
     }
 
-    return <View>
-        <EditableSpan value={props.todolist.title} onChange={changeTodolistTitle}/>
-        <Text>Del</Text>
-            {/*<IconButton onClick={removeTodolist} disabled={props.todolist.entityStatus === 'loading'}>*/}
-            {/*    <Delete/>*/}
-            {/*</IconButton>*/}
+    return <View style={{paddingTop: 50}}>
+        <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
+            <EditableSpan value={props.todolist.title} onChange={changeTodolistTitle}/>
+            <TouchableOpacity style={{marginLeft:25}} onPress={removeTodolist}>
+                <MaterialIcons name="delete" size={24} color="black"/>
+            </TouchableOpacity>
+        </View>
         <AddItemForm addItem={addTask} disabled={props.todolist.entityStatus === 'loading'}/>
-        <View>
+        <View style={{padding:8}}>
             {
                 tasksForTodolist.map(t => <Task key={t.id} task={t} todolistId={props.todolist.id}
                                                 removeTask={props.removeTask}
@@ -75,21 +76,6 @@ export const Todolist = React.memo(function ({demo = false, ...props}: PropsType
                 />)
             }
         </View>
-        {/*<div style={{paddingTop: '10px'}}>*/}
-        {/*    <Button variant={props.todolist.filter === 'all' ? 'outlined' : 'text'}*/}
-        {/*            onClick={onAllClickHandler}*/}
-        {/*            color={'default'}*/}
-        {/*    >All*/}
-        {/*    </Button>*/}
-        {/*    <Button variant={props.todolist.filter === 'active' ? 'outlined' : 'text'}*/}
-        {/*            onClick={onActiveClickHandler}*/}
-        {/*            color={'primary'}>Active*/}
-        {/*    </Button>*/}
-        {/*    <Button variant={props.todolist.filter === 'completed' ? 'outlined' : 'text'}*/}
-        {/*            onClick={onCompletedClickHandler}*/}
-        {/*            color={'secondary'}>Completed*/}
-        {/*    </Button>*/}
-        {/*</div>*/}
     </View>
 })
 
