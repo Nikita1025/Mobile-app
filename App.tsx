@@ -1,18 +1,38 @@
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import React from "react";
-import {Main} from "./src/app/Main";
-import {store} from "./src/app/store";
-import {Provider} from "react-redux";
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NavigationContainer } from '@react-navigation/native';
+
+
+
+function HomeScreen() {
+    return (
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+            <Text>Home Screen</Text>
+        </View>
+    );
+}
+function ProfileScreen() {
+    return (
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+            <Text>Profile Screen</Text>
+        </View>
+    );
+}
+
+const Stack = createNativeStackNavigator();
 
 
 export default function App() {
 
     return (
-        <Provider store={store}>
-            <View style={styles.container}>
-                <Main/>
-            </View>
-        </Provider>
+        <NavigationContainer>
+            <Stack.Navigator>
+                <Stack.Screen name="Home" component={HomeScreen} />
+                <Stack.Screen name="Profile" component={ProfileScreen} />
+            </Stack.Navigator>
+        </NavigationContainer>
+
     );
 }
 
