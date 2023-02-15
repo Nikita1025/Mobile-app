@@ -6,6 +6,9 @@ import {Button} from 'react-native';
 import {SafeAreaProvider} from "react-native-safe-area-context";
 import {VithSafeAreaView} from "./Helper/VithSafeAreaView";
 import {HomeProps, ProfileProps, RootStackParamList, UserProps} from "./Types/TypesNavigation";
+import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
+import {createDrawerNavigator} from "@react-navigation/drawer";
+import {RootAuth} from "./Screens/RootAuth";
 
 
 function HomeScreen({navigation}: HomeProps) {
@@ -14,7 +17,7 @@ function HomeScreen({navigation}: HomeProps) {
             <View style={{flex: 1, alignItems: 'center', justifyContent: 'space-between'}}>
                 <Text>Home Screen</Text>
                 <Button
-                    onPress={() => navigation.navigate('Profile')}
+                    onPress={() => navigation.navigate('Profile',{MyName:'Nikita'})}
                     title="Jump to profile "
 
                 />
@@ -24,11 +27,13 @@ function HomeScreen({navigation}: HomeProps) {
     );
 }
 
-function ProfileScreen({navigation}: ProfileProps) {
+function ProfileScreen({ route,navigation}: ProfileProps) {
+    const param = route.params
     return (
         <VithSafeAreaView>
             <View style={{flex: 1, alignItems: 'center', justifyContent: 'space-between'}}>
                 <Text>Profile Screen</Text>
+                <Text>{JSON.stringify(param)}</Text>
                 <Button
                     onPress={() => navigation.navigate('User')}
                     title="Jump to user "
@@ -46,7 +51,7 @@ function UserScreen({navigation}: UserProps) {
             <View style={{flex: 1, alignItems: 'center', justifyContent: 'space-between'}}>
                 <Text>Profile Screen</Text>
                 <Button
-                    onPress={() => navigation.navigate('Home')}
+                    onPress={() => navigation.navigate('Auth',{screen:'Login'})}
                     title="Jump to home "
 
                 />
@@ -55,7 +60,10 @@ function UserScreen({navigation}: UserProps) {
     );
 }
 
-const Stack = createNativeStackNavigator<RootStackParamList>();
+//const Stack = createNativeStackNavigator<RootStackParamList>();
+const Stack = createBottomTabNavigator<RootStackParamList>();
+//const Stack = createDrawerNavigator<RootStackParamList>();
+
 
 
 export default function App() {
@@ -65,7 +73,7 @@ export default function App() {
         <SafeAreaProvider>
             <NavigationContainer>
                 <Stack.Navigator>
-                    <Stack.Screen name="Home" component={HomeScreen}/>
+                    <Stack.Screen name="Auth" component={RootAuth}/>
                     <Stack.Screen name="Profile" component={ProfileScreen}/>
                     <Stack.Screen name="User" component={UserScreen}/>
                 </Stack.Navigator>
@@ -79,8 +87,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: 'white',
-        // alignItems: 'center',
-        // justifyContent: 'center',
     },
     input: {
         width: '80%',
