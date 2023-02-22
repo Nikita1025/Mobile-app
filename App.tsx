@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, Image} from 'react-native';
 import React from "react";
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
@@ -9,6 +9,7 @@ import {HomeProps, ProfileProps, RootStackParamList, UserProps} from "./Types/Ty
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import {createDrawerNavigator} from "@react-navigation/drawer";
 import {RootAuth} from "./Screens/RootAuth";
+import {fakeDataUser} from "./FakeDataUser";
 
 
 function HomeScreen({navigation}: HomeProps) {
@@ -17,7 +18,7 @@ function HomeScreen({navigation}: HomeProps) {
             <View style={{flex: 1, alignItems: 'center', justifyContent: 'space-between'}}>
                 <Text>Home Screen</Text>
                 <Button
-                    onPress={() => navigation.navigate('Profile',{MyName:'Nikita'})}
+                    onPress={() => navigation.navigate('Profile', {MyName: 'Nikita'})}
                     title="Jump to profile "
 
                 />
@@ -27,18 +28,23 @@ function HomeScreen({navigation}: HomeProps) {
     );
 }
 
-function ProfileScreen({ route,navigation}: ProfileProps) {
+function ProfileScreen({route, navigation}: ProfileProps) {
     const param = route.params
     return (
         <VithSafeAreaView>
             <View style={{flex: 1, alignItems: 'center', justifyContent: 'space-between'}}>
-                <Text>Profile Screen</Text>
-                <Text>{JSON.stringify(param)}</Text>
-                <Button
-                    onPress={() => navigation.navigate('User')}
-                    title="Jump to user "
+                <View>
+                    {fakeDataUser.map((el) => {
+                        return (<View style={styles.cont} key={el.id}>
+                            <Image style={styles.image} source={{uri: el.avatar}}/>
+                            <Text style={styles.text} onPress={() => navigation.navigate('User')}>
+                                {el.lastName}
+                                {el.firstName}
+                            </Text>
 
-                />
+                        </View>)
+                    })}
+                </View>
             </View>
         </VithSafeAreaView>
 
@@ -48,10 +54,29 @@ function ProfileScreen({ route,navigation}: ProfileProps) {
 function UserScreen({navigation}: UserProps) {
     return (
         <VithSafeAreaView>
-            <View style={{flex: 1, alignItems: 'center', justifyContent: 'space-between'}}>
-                <Text>Profile Screen</Text>
+            <View style={{flex: 1, justifyContent: 'space-between', alignItems: 'center'}}>
+                {fakeDataUser.map((el) => {
+                    return <View key={el.id} style={styles.contUser}>
+                        <Image style={styles.imageUser} source={{uri: el.avatar}}/>
+                        <View style={styles.textCont}>
+                            <Text>
+                                {el.firstName}
+                                {el.lastName}
+                            </Text>
+                            <Text>{el.role}</Text>
+                            <Text>{el.location.city}</Text>
+                        </View>
+                        <View>
+                            {el.skills.map((s, index) => {
+                                return <View key={index} style={styles.skills}>
+                                    <Text>{s}</Text>
+                                </View>
+                            })}
+                        </View>
+                    </View>
+                })}
                 <Button
-                    onPress={() => navigation.navigate('Auth',{screen:'Login'})}
+                    onPress={() => navigation.navigate('Auth', {screen: 'Login'})}
                     title="Jump to home "
 
                 />
@@ -63,7 +88,6 @@ function UserScreen({navigation}: UserProps) {
 //const Stack = createNativeStackNavigator<RootStackParamList>();
 const Stack = createBottomTabNavigator<RootStackParamList>();
 //const Stack = createDrawerNavigator<RootStackParamList>();
-
 
 
 export default function App() {
@@ -96,11 +120,49 @@ const styles = StyleSheet.create({
     },
     boxTak: {
         flexDirection: 'row',
-        backgroundColor: '#fffffe',
+        backgroundColor: '#a9a9a3',
         justifyContent: 'space-between',
         paddingVertical: 4,
         paddingHorizontal: 20,
         marginVertical: 2,
+    },
+    image: {
+        height: 50,
+        width: 50,
+        borderRadius: 50,
+    },
+    cont: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 400,
+        height: 100,
+        backgroundColor: '#ecece6',
+    },
+    text: {
+        paddingHorizontal: 5,
+        fontSize: 18
+    },
+    imageUser: {
+        width: 150,
+        height: 150,
+        borderRadius: 500,
+    },
+    skills: {
+        display: 'flex',
+        flexDirection: 'column',
+    },
+    textCont: {
+        display: 'flex',
+        flexDirection: 'column',
+    },
+    contUser: {
+        flex: 1,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
     }
 });
 
