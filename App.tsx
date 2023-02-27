@@ -47,6 +47,8 @@ export default function App(){
     )
 }
 
+
+
 const style= StyleSheet.create({
     container:{
         marginTop: 60,
